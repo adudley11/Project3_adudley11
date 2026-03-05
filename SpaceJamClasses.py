@@ -12,6 +12,7 @@ class Universe(ShowBase):
         self.modelNode.setName(nodeName)
         tex = loader.loadTexture(texPath)
         self.modelNode.setTexture(tex, 1)
+
         
 class Station(ShowBase):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
@@ -26,7 +27,9 @@ class Station(ShowBase):
                 
 class Ship(ShowBase):
     def __init__(self, loader: Loader, modelPath: str, parentNode: NodePath, nodeName: str, texPath: str, posVec: Vec3, scaleVec: float):
-        self.SetKeyBindings()        
+        self.taskManager = taskMgr
+        self.render = parentNode  
+        self.SetKeyBindings()      
         self.modelNode = loader.loadModel(modelPath)
         self.modelNode.reparentTo(parentNode)
         self.modelNode.setPos(posVec)
@@ -46,8 +49,8 @@ class Ship(ShowBase):
     def SetKeyBindings(self):
         self.accept('space', self.Thrust, [1])
         self.accept('space-up', self.Thrust, [0])
-        self.accept('left-turn', self.LeftTurn, [1])
-        self.accept('left-turn-up', self.LeftTurn, [0])
+        self.accept('arrow_left', self.LeftTurn, [1])
+        self.accept('arrow_left-up', self.LeftTurn, [0])
                     
     def ApplyThrust(self, task):
         rate = 5
@@ -61,10 +64,10 @@ class Ship(ShowBase):
         
     def LeftTurn(self, keyDown):
         if keyDown:
-            self.taskManager.add(self.ApplyLeftTurn, 'left-turn')
+            self.taskManager.add(self.ApplyLeftTurn, 'arrow_left')
             
         else:
-            self.taskManager.remove('left-turn')
+            self.taskManager.remove('arrow_left')
     
     def ApplyLeftTurn(self, task):
         rate = .5
