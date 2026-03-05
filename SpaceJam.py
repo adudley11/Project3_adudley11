@@ -9,7 +9,7 @@ class MyApp(ShowBase):
         ShowBase.__init__(self)
         
         self.SetupScene()
-
+        self.SetCamera()
         fullCycle = 60
         
         for j in range(fullCycle):
