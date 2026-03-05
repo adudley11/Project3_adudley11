@@ -37,7 +37,7 @@ class MyApp(ShowBase):
             spaceJamClasses.Drone.droneCount += 1
             nickName = "Drone6" + str(spaceJamClasses.Drone.droneCount)
             self.DrawCircleDefense(self.Planet6, nickName, j, fullCycle, 2, "Z")
-        
+
         
         self.accept('escape', self.quit)
 
@@ -55,7 +55,11 @@ class MyApp(ShowBase):
         self.Planet4 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet4", "./Assets/Planets/Planet-4.png", (1000, 10000, -1180), 239)
         self.Planet5 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet5", "./Assets/Planets/Planet-5.png", (2000, 6000, -90), 60)
         self.Planet6 = spaceJamClasses.Planet(self.loader,'./Assets/Planets/protoPlanet.x', self.render, "Planet6", "./Assets/Planets/Planet-6.png", (-1116, 5000, 1500), 240)
-        
+    
+    def SetCamera(self):    
+        self.disableMouse()
+        self.camera.reparentTo(self.Ship.modelNode)
+        self.camera.setFluidPos(0, 1, 0)
         
     def DrawBaseballSeams(self, centeralObject, droneName, step, numSeams, radius = 1):
         unitVec = defensePaths.BaseballSeams(step, numSeams, B = 0.4)
